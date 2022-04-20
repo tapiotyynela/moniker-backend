@@ -1,11 +1,21 @@
 import { Request, Response } from "express"
-import db from '../db/db'
+import User from '../models/user'
 
-export const getUser = (async (req: Request, res: Response) => {
+export const registerUser = (async (req: Request, res: Response) => {
     try {
-        await db.authenticate();
-        console.log('Connection has been established successfully.');
+        // const tapio = await User.findOne({
+        //     where: {
+        //         id: 3 
+        //     }
+        // })
+        // if(await tapio?.validPassword('testtest', tapio.password)) {
+        //     console.log("SALASANA OIKEIN")
+        // } else {
+        //     console.log("SALASANA VÄÄRIN")
+        // }
+        const newUser = await User.create(req.body)
+        res.status(200).send(newUser)
     } catch (error) {
-        console.error('Unable to connect to the database:', error);
+        res.send('Something went wrong')
     }
 })
