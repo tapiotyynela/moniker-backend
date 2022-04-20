@@ -9,7 +9,7 @@ app.listen(port, () => {
     console.log('App successfully running in port: ', port)
 })
 
-// app.use(express.json())
+app.use(express.json())
 app.get('/api/health', (req: Request, res: Response) => {
     res.send('API up.')
 })
