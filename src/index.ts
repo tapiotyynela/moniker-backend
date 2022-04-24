@@ -1,6 +1,7 @@
 import express, { Request } from 'express'
 import { Response } from 'express-serve-static-core';
 import userRoutes from './routes/user'
+import wordRoutes from './routes/word'
 import db from './db/db'
 import Word from './models/word'
 import cors from 'cors'
@@ -23,3 +24,4 @@ app.get('/api/health', (req: Request, res: Response) => {
 })
 
 app.use('/api/users', userRoutes)
+app.use('/api/word', wordRoutes)

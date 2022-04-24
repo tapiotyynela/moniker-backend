@@ -7,6 +7,10 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare firstName: string
     declare lastName: string
     declare nickName: string
+    declare gamesPlayed?: number
+    declare wordsExplained?: number
+    declare wordsSkipped?: number
+    declare averagePerTurn?: number
     declare email: string
     declare password: string
     validPassword(password: string, hashedPassword: string): NonAttribute<boolean> {
@@ -32,6 +36,22 @@ User.init({
         type: DataTypes.STRING,
         allowNull: false,
     },
+    gamesPlayed: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    wordsExplained: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    wordsSkipped: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    averagePerTurn: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -52,9 +72,7 @@ User.init({
     },
 })
 
-User.hasMany(Word, {
-    foreignKey: 'createdBy'
-})
+User.hasMany(Word)
 Word.belongsTo(User)
 
 export default User

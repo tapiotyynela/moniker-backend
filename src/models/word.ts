@@ -5,6 +5,7 @@ import User from './user'
 class Word extends Model<InferAttributes<Word>, InferCreationAttributes<Word>> {
     declare wordId: CreationOptional<number>
     declare word: string
+    declare category?: string
     declare timesExplained: number
 }
 
@@ -17,6 +18,10 @@ Word.init({
     word: {
         type: DataTypes.STRING,
         allowNull: false,
+    },
+    category: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
     timesExplained: {
         type: DataTypes.INTEGER,
