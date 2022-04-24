@@ -19,3 +19,21 @@ export const registerUser = (async (req: Request, res: Response) => {
         res.send('Something went wrong')
     }
 })
+
+export const login = (async (req: Request, res: Response) => {
+    try {
+        console.log("BPDY", req.body)
+        const user = await User.findOne({
+            where: {
+                email: req.body.email 
+            }
+        })
+        if(await user?.validPassword(req.body.password, user.password)) {
+            res.send("KIJAUTUMINEN ONNISTUI")
+        } else {
+            res.send("SALASANA VÄÄRIN")
+        }
+    } catch (error) {
+        res.send('Something went wrong')
+    }
+})

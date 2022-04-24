@@ -1,9 +1,9 @@
 import { Model, InferAttributes, InferCreationAttributes, CreationOptional, DataTypes, NonAttribute, } from 'sequelize'
 import bcrypt from 'bcrypt'
 import sequelize from '../db/db'
-
+import Word from './word'
 class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-    declare id: CreationOptional<number>
+    declare userId: CreationOptional<number>
     declare firstName: string
     declare lastName: string
     declare nickName: string
@@ -15,7 +15,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 }
 
 User.init({
-    id: {
+    userId: {
         type: DataTypes.INTEGER.UNSIGNED,
         autoIncrement: true,
         primaryKey: true
@@ -51,5 +51,10 @@ User.init({
         }
     },
 })
+
+User.hasMany(Word, {
+    foreignKey: 'createdBy'
+})
+Word.belongsTo(User)
 
 export default User
