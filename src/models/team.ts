@@ -34,10 +34,14 @@ Team.init({
 })
 
 Team.belongsToMany(User, {
-    through: 'UserTeams'
+    through: 'UserTeams',
+    foreignKey: "teamId",
+    otherKey: "userId",
 })
 User.belongsToMany(Team, {
-    through: 'UserTeams'
+    through: 'UserTeams',
+    foreignKey: "userId",
+    otherKey: "teamId",
 })
 
 export default Team
