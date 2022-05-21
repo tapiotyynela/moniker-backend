@@ -2,6 +2,14 @@ import { Request, Response } from "express"
 import {Op} from "sequelize"
 import User from '../models/user'
 
+export const findUserByNickname = async (nickName: string): Promise<User | null> => {
+    return User.findOne({
+        where: {
+            nickName: nickName
+        }
+    })
+}
+
 export const registerUser = async (req: Request, res: Response) => {
     try {
         const newUser = await User.create(req.body)
@@ -13,7 +21,6 @@ export const registerUser = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
     try {
-        console.log("BPDY", req.body)
         const user = await User.findOne({
             where: {
                 email: req.body.email 
