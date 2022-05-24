@@ -18,7 +18,7 @@ app.listen(port, () => {
 })
 
 initializeDb([Game, Team, User, Word])
-db.sync({ alter: true })
+db.sync({ force: true })
 app.use(express.json())
 app.use(cors({
   origin: 'http://localhost:3001'  

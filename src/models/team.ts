@@ -6,6 +6,7 @@ class Team extends Model<InferAttributes<Team>, InferCreationAttributes<Team>> {
     declare teamId: CreationOptional<number>
     declare name: string
     declare score?: number
+    declare activeTurn: boolean
     declare game: number
 }
 
@@ -23,6 +24,10 @@ Team.init({
         type: DataTypes.STRING,
         allowNull: false,
         defaultValue: 0
+    },
+    activeTurn: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false
     },
     game: {
         type: DataTypes.INTEGER,

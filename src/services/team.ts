@@ -12,7 +12,8 @@ export const assignPlayersToTeam = async (teamId: number, players: number[]) => 
 export const createTeam = async (newTeam: NewTeam, game: Game): Promise<Team> => {
     const team = await Team.create({
         name: newTeam.name,
-        game: game.gameId
+        game: game.gameId,
+        activeTurn: false
     })
     await assignPlayersToTeam(team.teamId, newTeam.players)
     return team

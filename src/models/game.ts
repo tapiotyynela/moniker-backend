@@ -7,6 +7,7 @@ class Game extends Model<InferAttributes<Game>, InferCreationAttributes<Game>> {
     declare roundLength: number
     declare pointsToWin: number
     declare teams?: Team[]
+    declare active: boolean
 }
 
 Game.init({
@@ -25,6 +26,10 @@ Game.init({
     },
     pointsToWin: {
         type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    active: {
+        type: DataTypes.BOOLEAN,
         allowNull: false
     }
 

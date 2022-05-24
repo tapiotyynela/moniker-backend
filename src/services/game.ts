@@ -8,6 +8,7 @@ export const createGame = async (pointsToWin: number, roundLength: number) => {
     return Game.create({
         pointsToWin,
         roundLength,
+        active: false
     })
 }
 
@@ -21,7 +22,10 @@ export const getGameWithTeams = async (gameId: number) => {
 }
 
 export const createNewGame = async (newGame: NewGame) => {
+    console.log("MOIR 1")
     const game = await createGame(newGame.pointsToWin, newGame.roundLength)
+    console.log("MOIR 2")
     await createTeamsForNewGame(game, newGame.teams)
+    console.log("MOIR 3")
     return getGameWithTeams(game.gameId)
 }
