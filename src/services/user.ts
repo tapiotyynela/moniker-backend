@@ -1,6 +1,8 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import {Op} from "sequelize"
 import User from '../models/user'
+import jwt from 'jsonwebtoken'
+import { RequestWithUser } from "../types/request"
 
 export const findUserByNickname = async (nickName: string): Promise<User | null> => {
     return User.findOne({
@@ -26,17 +28,27 @@ export const login = async (req: Request, res: Response) => {
                 email: req.body.email 
             }
         })
-        if(await user?.validPassword(req.body.password, user.password)) {
-            res.send("KIJAUTUMINEN ONNISTUI")
+        if(user && user?.validPassword(req.body.password, user.password)) {
+            const jwtSecretKey = process.env.JWT_SECRET_KEY as string
+            const data = {
+                userId: user.userId,
+                firstName: user.firstName,
+                lastName: user.lastName
+            }
+            const token = jwt.sign(data, jwtSecretKey)
+            res.status(200).send({
+                token,
+                user
+            })
         } else {
-            res.send("SALASANA VÄÄRIN")
+            res.status(401).send("Virheellinen sähköposti tai salasana")
         }
     } catch (error) {
         res.send('Something went wrong')
     }
 }
 
-export const getUsersBySearchWord = async (req: Request, res: Response) => {
+export const getUsersBySearchWord = async (req: RequestWithUser, res: Response) => {
     try {
         const { word } = req.body
         const usersByNickName = await User.findAll({
