@@ -1,7 +1,13 @@
 import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv'
 
-const connection = new Sequelize('postgres://localhost:5432/moniker')
-connection.authenticate()
+dotenv.config()
+
+const connection = new Sequelize(process.env.POSTGRES_DB || '', process.env.POSTGRES_USER || '', process.env.POSTGRES_PW || '', {
+    dialect: 'postgres',
+    host: 'localhost',
+    port: 5432,
+})
 
 export const initializeDb = (models: any) => {
     const db: any = {}

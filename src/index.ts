@@ -11,16 +11,16 @@ import Team from './models/team';
 import User from './models/user';
 import Word from './models/word';
 
-const app = express()
 dotenv.config()
+const app = express()
 const port = 3000
 
 app.listen(port, () => {
-    console.log('App successfully running in port: ', port)
+  console.log('App successfully running in port: ', port)
 })
 
-initializeDb([Game, Team, User, Word])
 db.sync({ alter: true })
+initializeDb([Game, Team, User, Word])
 app.use(express.json())
 app.use(cors({
   origin: 'http://localhost:3001'  

@@ -20,7 +20,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 
 User.init({
     userId: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
@@ -33,6 +33,15 @@ User.init({
         allowNull: false,
     },
     nickName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    email: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+    },
+    password: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -51,14 +60,6 @@ User.init({
     averagePerTurn: {
         type: DataTypes.INTEGER,
         allowNull: true,
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false,
     },
 }
 ,{

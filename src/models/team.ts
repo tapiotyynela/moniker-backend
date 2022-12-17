@@ -12,7 +12,7 @@ class Team extends Model<InferAttributes<Team>, InferCreationAttributes<Team>> {
 
 Team.init({
     teamId: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },

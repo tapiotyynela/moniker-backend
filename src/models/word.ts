@@ -9,7 +9,7 @@ class Word extends Model<InferAttributes<Word>, InferCreationAttributes<Word>> {
 
 Word.init({
     wordId: {
-        type: DataTypes.INTEGER.UNSIGNED,
+        type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
     },
