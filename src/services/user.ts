@@ -21,6 +21,15 @@ export const registerUser = async (req: Request, res: Response) => {
     }
 }
 
+export const getAllUsers = async (req: Request, res: Response) => {
+    try {
+        const users = await User.findAll()
+        res.status(200).send(users)
+    } catch (error) {
+        res.send('Something went wrong')
+    }
+}
+
 export const login = async (req: Request, res: Response) => {
     try {
         const user = await User.findOne({

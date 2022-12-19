@@ -26,3 +26,13 @@ export const createNewGame = async (newGame: NewGame) => {
     await createTeamsForNewGame(game, newGame.teams)
     return getGameWithTeams(game.gameId)
 }
+
+export const getUsersGames = async (userId: number) => {
+    const teams = await Team.findAll({
+        include: [{ model: User, where: { userId }}]
+    })
+    const games = await Promise.all(teams.map(team => {
+        return Game.findOne({include:[Team], where: { gameId: team.game }})
+    }))
+    return games
+}

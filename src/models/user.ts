@@ -1,8 +1,10 @@
-import { Model, InferAttributes, InferCreationAttributes, CreationOptional, DataTypes, NonAttribute, } from 'sequelize'
-import bcrypt from 'bcrypt'
+import {
+    Association, DataTypes, HasManyGetAssociationsMixin, Model, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute,
+  } from 'sequelize';import bcrypt from 'bcrypt'
 import sequelize from '../db/db'
 import Word from './word'
-class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+import Game from './game';
+class User extends Model<InferAttributes<User, { omit: 'Games'}>, InferCreationAttributes<User, {omit: 'Games'}>> {
     declare userId: CreationOptional<number>
     declare firstName: string
     declare lastName: string
@@ -13,9 +15,15 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare averagePerTurn?: number
     declare email: string
     declare password: string
+    declare Games?: NonAttribute<Game[]>; // Note this is optional since it's only populated when explicitly requested in code
+    declare getGames: HasManyGetAssociationsMixin<Game>; // Note the null assertions!
     validPassword(password: string, hashedPassword: string): NonAttribute<boolean> {
         return bcrypt.compareSync(password, hashedPassword)
     }
+
+    declare static associations: {
+        Games: Association<User, Game>;
+      };
 }
 
 User.init({
