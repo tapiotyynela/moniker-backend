@@ -3,6 +3,7 @@ import sequelize from '../db/db'
 import Team from './team'
 class Game extends Model<InferAttributes<Game>, InferCreationAttributes<Game>> {
     declare gameId: CreationOptional<number>
+    declare gameIdentifier: string
     declare winner?: string
     declare roundLength: number
     declare pointsToWin: number
@@ -15,6 +16,10 @@ Game.init({
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
+    },
+    gameIdentifier: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     winner: {
         type: DataTypes.STRING,

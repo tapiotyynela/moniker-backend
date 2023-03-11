@@ -1,16 +1,6 @@
-import { NextFunction, Request, Response } from "express"
-import {Op} from "sequelize"
+import { Request, Response } from "express"
 import User from '../models/user'
 import jwt from 'jsonwebtoken'
-import { RequestWithUser } from "../types/request"
-
-export const findUserByNickname = async (nickName: string): Promise<User | null> => {
-    return User.findOne({
-        where: {
-            nickName: nickName
-        }
-    })
-}
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
@@ -52,22 +42,6 @@ export const login = async (req: Request, res: Response) => {
         } else {
             res.status(401).send("Virheellinen sähköposti tai salasana")
         }
-    } catch (error) {
-        res.send('Something went wrong')
-    }
-}
-
-export const getUsersBySearchWord = async (req: RequestWithUser, res: Response) => {
-    try {
-        const { word } = req.body
-        const usersByNickName = await User.findAll({
-            where: {
-                nickName: {
-                    [Op.like]: `${word}%`
-                }
-            }
-        })
-        res.send(usersByNickName) 
     } catch (error) {
         res.send('Something went wrong')
     }
